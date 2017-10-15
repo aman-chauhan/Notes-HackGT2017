@@ -65,7 +65,7 @@
 		<div class="tab-content" id="nav-tabContent">
 			<div class="tab-pane fade show active" id="nav-mynotes"
 				role="tabpanel" aria-labelledby="nav-mynotes-tab">
-				<c:forEach  var="note" items="${notesbyme}">
+				<c:forEach var="note" items="${notesbyme}">
 					<div class="card my-2">
 						<div class="card-body">
 							<h4 class="card-title">
@@ -87,57 +87,49 @@
 			</div>
 			<div class="tab-pane fade" id="nav-mycourses" role="tabpanel"
 				aria-labelledby="nav-mycourses-tab">
-				<div class="card my-2">
-					<div class="card-body">
-						<h4 class="card-title">Note Title</h4>
-						<h6 class="card-subtitle mb-2 text-muted">Uploaded to CSC600
-							by ABC for 12/12/12</h6>
-						<p class="card-text">Some quick example text to build on the
-							card title and make up the bulk of the card's content.</p>
-						<button type="button" class="btn btn-outline-success ">Like</button>
-						<button type="button" class="btn btn-outline-primary ">View</button>
-						<button type="button" class="btn btn-outline-default ">Edit</button>
+				<c:forEach var="note" items="${notesfromcourses}">
+					<div class="card my-2">
+						<div class="card-body">
+							<h4 class="card-title">
+								<c:out value="${note.noteTitle}" />
+							</h4>
+							<h5 class="card-subtitle mb-2 text-muted">
+								Uploaded to course <a href="course/${note.noteID}"><c:out
+										value="${note.courseName}" /></a> for
+								<c:out value="${note.noteDate}" /> by <a href="student/${note.studentID}"><c:out
+										value="${note.firstName}"/><c:out value="${note.lastName}"/></a>
+							</h5>
+							<p class="card-text">${note.noteContent}</p>
+							<button type="button"
+								class="note-like-btn btn btn-outline-success ">Like</button>
+							<button type="button"
+								class="note-edit-btn btn btn-outline-default ">Edit</button>
+						</div>
 					</div>
-				</div>
-				<div class="card my-2">
-					<div class="card-body">
-						<h4 class="card-title">Note Title</h4>
-						<h6 class="card-subtitle mb-2 text-muted">Uploaded to CSC600
-							by ABC for 12/12/12</h6>
-						<p class="card-text">Some quick example text to build on the
-							card title and make up the bulk of the card's content.</p>
-						<button type="button" class="btn btn-outline-success ">Like</button>
-						<button type="button" class="btn btn-outline-primary ">View</button>
-						<button type="button" class="btn btn-outline-default ">Edit</button>
-					</div>
-				</div>
+				</c:forEach>
 			</div>
 			<div class="tab-pane fade" id="nav-myfriends" role="tabpanel"
 				aria-labelledby="nav-myfriends-tab">
-				<div class="card my-2">
-					<div class="card-body">
-						<h4 class="card-title">Note Title</h4>
-						<h6 class="card-subtitle mb-2 text-muted">Uploaded to CSC600
-							by ABC for 12/12/12</h6>
-						<p class="card-text">Some quick example text to build on the
-							card title and make up the bulk of the card's content.</p>
-						<button type="button" class="btn btn-outline-success ">Like</button>
-						<button type="button" class="btn btn-outline-primary ">View</button>
-						<button type="button" class="btn btn-outline-default ">Edit</button>
+				<c:forEach  var="note" items="${notesfromstudents}">
+					<div class="card my-2">
+						<div class="card-body">
+							<h4 class="card-title">
+								<c:out value="${note.noteTitle}" />
+							</h4>
+							<h5 class="card-subtitle mb-2 text-muted">
+								Uploaded to course <a href="course/${note.noteID}"><c:out
+										value="${note.courseName}" /></a> for
+								<c:out value="${note.noteDate}" /> by <a href="student/${note.studentID}"><c:out
+										value="${note.firstName}"/><c:out value="${note.lastName}"/></a>
+							</h5>
+							<p class="card-text">${note.noteContent}</p>
+							<button type="button"
+								class="note-like-btn btn btn-outline-success ">Like</button>
+							<button type="button"
+								class="note-edit-btn btn btn-outline-default ">Edit</button>
+						</div>
 					</div>
-				</div>
-				<div class="card my-2">
-					<div class="card-body">
-						<h4 class="card-title">Note Title</h4>
-						<h6 class="card-subtitle mb-2 text-muted">Uploaded to CSC600
-							by ABC for 12/12/12</h6>
-						<p class="card-text">Some quick example text to build on the
-							card title and make up the bulk of the card's content.</p>
-						<button type="button" class="btn btn-outline-success ">Like</button>
-						<button type="button" class="btn btn-outline-primary ">View</button>
-						<button type="button" class="btn btn-outline-default ">Edit</button>
-					</div>
-				</div>
+				</c:forEach>
 			</div>
 		</div>
 	</div>

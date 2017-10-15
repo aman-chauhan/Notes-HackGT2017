@@ -24,7 +24,7 @@ public class CourseJDBC {
 	
 	public List<Course> listOfCoursesOfStudent(int studentid) {
 		
-		String SQL = "select CourseID,CourseName from course C,studentfollowscourse SFC where C.CourseID = SFC.CourseID and SFC.StudentID = "+Integer.toString(studentid);
+		String SQL = "select C.CourseID,C.CourseName from course C,studentfollowscourse SFC where C.CourseID = SFC.CourseID and SFC.StudentID = "+Integer.toString(studentid);
 		List<Course> courselist = jdbcTemplateObject.query(SQL, new CourseMapper());
 		return courselist;
 	}

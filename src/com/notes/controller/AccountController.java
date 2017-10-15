@@ -42,8 +42,14 @@ public class AccountController {
 	@RequestMapping(value = "/myfeed", method = RequestMethod.GET)
 	public ModelAndView displayMyFeed(HttpSession session) {
 		List<Note> mynotes = jdbcobject.listOfNotesByMe(((Student) session.getAttribute("me")).getStudent_id());
+		List<Note> notesfromcourses = jdbcobject
+				.listOfNotesFromCoursesILike(((Student) session.getAttribute("me")).getStudent_id());
+		List<Note> notesfromstudents = jdbcobject
+				.listOfNotesFromStudentsIFollow(((Student) session.getAttribute("me")).getStudent_id());
 		ModelAndView mav = new ModelAndView("myfeed");
 		mav.addObject("notesbyme", mynotes);
+		mav.addObject("notesfromcourses", notesfromcourses);
+		mav.addObject("notesfromstudents", notesfromstudents);
 		return mav;
 	}
 
@@ -52,8 +58,12 @@ public class AccountController {
 			@RequestParam("loginpassword") String password, HttpSession session) {
 		Student student = jdbcobject.getStudentbyLogin(email, password);
 		List<Note> mynotes = jdbcobject.listOfNotesByMe(student.getStudent_id());
+		List<Note> notesfromcourses = jdbcobject.listOfNotesFromCoursesILike(student.getStudent_id());
+		List<Note> notesfromstudents = jdbcobject.listOfNotesFromStudentsIFollow(student.getStudent_id());
 		ModelAndView mav = new ModelAndView("myfeed");
 		mav.addObject("notesbyme", mynotes);
+		mav.addObject("notesfromcourses", notesfromcourses);
+		mav.addObject("notesfromstudents", notesfromstudents);
 		session.setAttribute("me", student);
 		return mav;
 	}
@@ -73,11 +83,12 @@ public class AccountController {
 
 	@RequestMapping(value = "/myfriends", method = RequestMethod.GET)
 	public ModelAndView showStudentFollowers(HttpSession session) {
-		// List<Student> ifollow = jdbcobject.listOfStudentsIFollow(((Student)
-		// session.getAttribute("me")).getStudent_id());
-		// List<Student> followme = jdbcobject.listOfStudentsWhoFollowMe(((Student)
-		// session.getAttribute("me")).getStudent_id());
+		List<Student> ifollow = jdbcobject
+				.listOfStudentsIFollow(((Student) session.getAttribute("me")).getStudent_id());
+		List<Student> followme = jdbcobject
+				.listOfStudentsWhoFollowMe(((Student) session.getAttribute("me")).getStudent_id());
 		ModelAndView mav = new ModelAndView("myfriends");
 		return mav;
 	}
+
 }
