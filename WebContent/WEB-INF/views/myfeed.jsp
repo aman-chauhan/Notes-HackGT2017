@@ -41,109 +41,112 @@
 		</div>
 	</div>
 	</nav>
-	<div style="float:left; margin-left: 2%; margin-right: 2%;text-align:center;" class="col-md-2 border">
-		<div style="padding-top: 2%;">
-			<img src="${profilepic}" class="rounded-circle border" height=80% width=80%>
-		</div>
-		<span style="text-transform: uppercase;">${me.first_name} ${me.last_name}</span>
-	</div>
-	<div class="container" style="margin-top: 80px;">
-			<div class="card mb-3">
-				<div class="card-body">
-					<form>
-						<div class="ui-widget">
-							<input class="form-control form-control-lg" type="text"
-								id="searchform" placeholder="Search">
-						</div>
-					</form>
+	<div class="container-fluid" style="margin-top: 80px;">
+		<div class="row">
+			<div class="col-md-3" style="text-align: center;">
+				<div>
+					<img src="${profilepic}" class="rounded-circle border border-primary"  style="height: 75%; width: 75%;"/>
+				</div> <span style="text-transform: uppercase;">${me.first_name}
+					${me.last_name}</span>
+			</div>
+			<div class="col-md-6">
+				<div class="card mb-3">
+					<div class="card-body">
+						<form>
+							<div class="ui-widget">
+								<input class="form-control form-control-lg" type="text"
+									id="searchform" placeholder="Search">
+							</div>
+						</form>
+					</div>
+				</div>
+				<nav class="nav nav-tabs nav-fill" id="myTab" role="tablist">
+				<a class="nav-item nav-link active" id="nav-mynotes-tab"
+					data-toggle="tab" href="#nav-mynotes" role="tab"
+					aria-controls="nav-mynotes" aria-expanded="true">My Notes</a> <a
+					class="nav-item nav-link" id="nav-mycourses-tab" data-toggle="tab"
+					href="#nav-mycourses" role="tab" aria-controls="nav-mycourses">Feed
+					from Courses</a> <a class="nav-item nav-link" id="nav-myfriends-tab"
+					data-toggle="tab" href="#nav-myfriends" role="tab"
+					aria-controls="nav-myfriends">Feed from Following</a> </nav>
+				<div class="tab-content" id="nav-tabContent">
+					<div class="tab-pane fade show active" id="nav-mynotes"
+						role="tabpanel" aria-labelledby="nav-mynotes-tab">
+						<c:forEach var="note" items="${notesbyme}">
+							<div class="card my-2">
+								<div class="card-body">
+									<h4 class="card-title">
+										<c:out value="${note.noteTitle}" />
+									</h4>
+									<h5 class="card-subtitle mb-2 text-muted">
+										Uploaded to course <a href="course/${note.noteID}"><c:out
+												value="${note.courseName}" /></a> for
+										<c:out value="${note.noteDate}" />
+									</h5>
+									<p class="card-text">${note.noteContent}</p>
+									<button type="button"
+										class="note-like-btn btn btn-outline-success ">Like</button>
+									<button type="button"
+										class="note-edit-btn btn btn-outline-default ">Edit</button>
+								</div>
+							</div>
+						</c:forEach>
+					</div>
+					<div class="tab-pane fade" id="nav-mycourses" role="tabpanel"
+						aria-labelledby="nav-mycourses-tab">
+						<c:forEach var="note" items="${notesfromcourses}">
+							<div class="card my-2">
+								<div class="card-body">
+									<h4 class="card-title">
+										<c:out value="${note.noteTitle}" />
+									</h4>
+									<h5 class="card-subtitle mb-2 text-muted">
+										Uploaded to course <a href="course/${note.noteID}"><c:out
+												value="${note.courseName}" /></a> for
+										<c:out value="${note.noteDate}" />
+										by <a href="student/${note.studentID}"><c:out
+												value="${note.firstName}" /> <c:out
+												value="${note.lastName}" /></a>
+									</h5>
+									<p class="card-text">${note.noteContent}</p>
+									<button type="button"
+										class="note-like-btn btn btn-outline-success ">Like</button>
+									<button type="button"
+										class="note-edit-btn btn btn-outline-default ">Edit</button>
+								</div>
+							</div>
+						</c:forEach>
+					</div>
+					<div class="tab-pane fade" id="nav-myfriends" role="tabpanel"
+						aria-labelledby="nav-myfriends-tab">
+						<c:forEach var="note" items="${notesfromstudents}">
+							<div class="card my-2">
+								<div class="card-body">
+									<h4 class="card-title">
+										<c:out value="${note.noteTitle}" />
+									</h4>
+									<h5 class="card-subtitle mb-2 text-muted">
+										Uploaded to course <a href="course/${note.noteID}"><c:out
+												value="${note.courseName}" /></a> for
+										<c:out value="${note.noteDate}" />
+										by <a href="student/${note.studentID}"><c:out
+												value="${note.firstName}" /> <c:out
+												value="${note.lastName}" /></a>
+									</h5>
+									<p class="card-text">${note.noteContent}</p>
+									<button type="button"
+										class="note-like-btn btn btn-outline-success ">Like</button>
+									<button type="button"
+										class="note-edit-btn btn btn-outline-default ">Edit</button>
+								</div>
+							</div>
+						</c:forEach>
+					</div>
 				</div>
 			</div>
 		</div>
-	<div class="container">
-		<nav class="nav nav-tabs nav-fill" id="myTab" role="tablist"> <a
-			class="nav-item nav-link active" id="nav-mynotes-tab"
-			data-toggle="tab" href="#nav-mynotes" role="tab"
-			aria-controls="nav-mynotes" aria-expanded="true">My Notes</a> <a
-			class="nav-item nav-link" id="nav-mycourses-tab" data-toggle="tab"
-			href="#nav-mycourses" role="tab" aria-controls="nav-mycourses">Feed
-			from Courses</a> <a class="nav-item nav-link" id="nav-myfriends-tab"
-			data-toggle="tab" href="#nav-myfriends" role="tab"
-			aria-controls="nav-myfriends">Feed from Following</a> </nav>
-		<div class="tab-content" id="nav-tabContent">
-			<div class="tab-pane fade show active" id="nav-mynotes"
-				role="tabpanel" aria-labelledby="nav-mynotes-tab">
-				<c:forEach var="note" items="${notesbyme}">
-					<div class="card my-2">
-						<div class="card-body">
-							<h4 class="card-title">
-								<c:out value="${note.noteTitle}" />
-							</h4>
-							<h5 class="card-subtitle mb-2 text-muted">
-								Uploaded to course <a href="course/${note.noteID}"><c:out
-										value="${note.courseName}" /></a> for
-								<c:out value="${note.noteDate}" />
-							</h5>
-							<p class="card-text">${note.noteContent}</p>
-							<button type="button"
-								class="note-like-btn btn btn-outline-success ">Like</button>
-							<button type="button"
-								class="note-edit-btn btn btn-outline-default ">Edit</button>
-						</div>
-					</div>
-				</c:forEach>
-			</div>
-			<div class="tab-pane fade" id="nav-mycourses" role="tabpanel"
-				aria-labelledby="nav-mycourses-tab">
-				<c:forEach var="note" items="${notesfromcourses}">
-					<div class="card my-2">
-						<div class="card-body">
-							<h4 class="card-title">
-								<c:out value="${note.noteTitle}" />
-							</h4>
-							<h5 class="card-subtitle mb-2 text-muted">
-								Uploaded to course <a href="course/${note.noteID}"><c:out
-										value="${note.courseName}" /></a> for
-								<c:out value="${note.noteDate}" />
-								by <a href="student/${note.studentID}"><c:out
-										value="${note.firstName}" />
-									<c:out value="${note.lastName}" /></a>
-							</h5>
-							<p class="card-text">${note.noteContent}</p>
-							<button type="button"
-								class="note-like-btn btn btn-outline-success ">Like</button>
-							<button type="button"
-								class="note-edit-btn btn btn-outline-default ">Edit</button>
-						</div>
-					</div>
-				</c:forEach>
-			</div>
-			<div class="tab-pane fade" id="nav-myfriends" role="tabpanel"
-				aria-labelledby="nav-myfriends-tab">
-				<c:forEach var="note" items="${notesfromstudents}">
-					<div class="card my-2">
-						<div class="card-body">
-							<h4 class="card-title">
-								<c:out value="${note.noteTitle}" />
-							</h4>
-							<h5 class="card-subtitle mb-2 text-muted">
-								Uploaded to course <a href="course/${note.noteID}"><c:out
-										value="${note.courseName}" /></a> for
-								<c:out value="${note.noteDate}" />
-								by <a href="student/${note.studentID}"><c:out
-										value="${note.firstName}" />
-									<c:out value="${note.lastName}" /></a>
-							</h5>
-							<p class="card-text">${note.noteContent}</p>
-							<button type="button"
-								class="note-like-btn btn btn-outline-success ">Like</button>
-							<button type="button"
-								class="note-edit-btn btn btn-outline-default ">Edit</button>
-						</div>
-					</div>
-				</c:forEach>
-			</div>
-		</div>
 	</div>
+
 
 	<script src="https://code.jquery.com/jquery-3.2.1.min.js"
 		integrity="sha256-hwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4="
