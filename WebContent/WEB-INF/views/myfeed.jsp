@@ -6,6 +6,7 @@
 <html>
 <head>
 <spring:url value="/resources/js/js-myfeed.js" var="myfeedjs" />
+<spring:url value="/resources/profilepic.jpg" var="profilepic" />
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <meta name="viewport"
 	content="width=device-width, initial-scale=1, shrink-to-fit=no">
@@ -40,18 +41,24 @@
 		</div>
 	</div>
 	</nav>
+	<div style="float:left; margin-left: 2%; margin-right: 2%;text-align:center;" class="col-md-2 border">
+		<div style="padding-top: 2%;">
+			<img src="${profilepic}" class="rounded-circle border" height=80% width=80%>
+		</div>
+		<span style="text-transform: uppercase;">${me.first_name} ${me.last_name}</span>
+	</div>
 	<div class="container" style="margin-top: 80px;">
-		<div class="card mb-3">
-			<div class="card-body">
-				<form>
-					<div class="ui-widget">
-						<input class="form-control form-control-lg" type="text"
-							id="searchform" placeholder="Search">
-					</div>
-				</form>
+			<div class="card mb-3">
+				<div class="card-body">
+					<form>
+						<div class="ui-widget">
+							<input class="form-control form-control-lg" type="text"
+								id="searchform" placeholder="Search">
+						</div>
+					</form>
+				</div>
 			</div>
 		</div>
-	</div>
 	<div class="container">
 		<nav class="nav nav-tabs nav-fill" id="myTab" role="tablist"> <a
 			class="nav-item nav-link active" id="nav-mynotes-tab"
@@ -96,8 +103,10 @@
 							<h5 class="card-subtitle mb-2 text-muted">
 								Uploaded to course <a href="course/${note.noteID}"><c:out
 										value="${note.courseName}" /></a> for
-								<c:out value="${note.noteDate}" /> by <a href="student/${note.studentID}"><c:out
-										value="${note.firstName}"/><c:out value="${note.lastName}"/></a>
+								<c:out value="${note.noteDate}" />
+								by <a href="student/${note.studentID}"><c:out
+										value="${note.firstName}" />
+									<c:out value="${note.lastName}" /></a>
 							</h5>
 							<p class="card-text">${note.noteContent}</p>
 							<button type="button"
@@ -110,7 +119,7 @@
 			</div>
 			<div class="tab-pane fade" id="nav-myfriends" role="tabpanel"
 				aria-labelledby="nav-myfriends-tab">
-				<c:forEach  var="note" items="${notesfromstudents}">
+				<c:forEach var="note" items="${notesfromstudents}">
 					<div class="card my-2">
 						<div class="card-body">
 							<h4 class="card-title">
@@ -119,8 +128,10 @@
 							<h5 class="card-subtitle mb-2 text-muted">
 								Uploaded to course <a href="course/${note.noteID}"><c:out
 										value="${note.courseName}" /></a> for
-								<c:out value="${note.noteDate}" /> by <a href="student/${note.studentID}"><c:out
-										value="${note.firstName}"/><c:out value="${note.lastName}"/></a>
+								<c:out value="${note.noteDate}" />
+								by <a href="student/${note.studentID}"><c:out
+										value="${note.firstName}" />
+									<c:out value="${note.lastName}" /></a>
 							</h5>
 							<p class="card-text">${note.noteContent}</p>
 							<button type="button"

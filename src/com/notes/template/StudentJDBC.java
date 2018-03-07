@@ -42,7 +42,7 @@ public class StudentJDBC {
 	}
 
 	public List<Student> listOfStudentsWhoFollowMe(int studentid) {
-		String SQL = "select S.StudentID,S.FirstName,S.LastName,S.Email from student S, studentfollowsstudent SFS where SFS.StudentID1=S.StudentID and SFS.StudentID12 = "
+		String SQL = "select S.StudentID,S.FirstName,S.LastName,S.Email from student S, studentfollowsstudent SFS where SFS.StudentID1=S.StudentID and SFS.StudentID2 = "
 				+ Integer.toString(studentid);
 		List<Student> studentlist = jdbcTemplateObject.query(SQL, new StudentSafeMapper());
 		return studentlist;
