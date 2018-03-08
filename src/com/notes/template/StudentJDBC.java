@@ -30,8 +30,12 @@ public class StudentJDBC {
 
 	public Student getStudentbyLogin(String email, String password) {
 		String SQL = "select * from student where Email = ? and Password = ?";
-		Student student = jdbcTemplateObject.queryForObject(SQL, new StudentMapper(), email, password);
-		return student;
+		try {
+			Student student = jdbcTemplateObject.queryForObject(SQL, new StudentMapper(), email, password);
+			return student;
+		} catch(Exception e) {
+			return null;
+		}
 	}
 
 	public List<Student> listOfStudentsIFollow(int studentid) {

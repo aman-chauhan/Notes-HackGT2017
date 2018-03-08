@@ -7,6 +7,7 @@ import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -53,21 +54,28 @@ public class AccountController {
 		return mav;
 	}
 
-	@RequestMapping(value = "/myfeed", method = RequestMethod.POST)
+	@RequestMapping(value = "/login", method = RequestMethod.POST)
 	public ModelAndView loginToSystemWeb(@RequestParam("loginemail") String email,
 			@RequestParam("loginpassword") String password, HttpSession session) {
 		Student student = jdbcobject.getStudentbyLogin(email, password);
-		List<Note> mynotes = jdbcobject.listOfNotesByMe(student.getStudent_id());
-		List<Note> notesfromcourses = jdbcobject.listOfNotesFromCoursesILike(student.getStudent_id());
-		List<Note> notesfromstudents = jdbcobject.listOfNotesFromStudentsIFollow(student.getStudent_id());
-		ModelAndView mav = new ModelAndView("myfeed");
-		mav.addObject("notesbyme", mynotes);
-		mav.addObject("notesfromcourses", notesfromcourses);
-		mav.addObject("notesfromstudents", notesfromstudents);
-		session.setAttribute("me", student);
-		return mav;
+		if (student != null) {
+			session.setAttribute("me", student);
+			if (session.getAttribute("loginerror") != null) {
+				session.removeAttribute("loginerror");
+			}
+			return new ModelAndView("redirect:/myfeed");
+		} else {
+			session.setAttribute("loginerror", "Incorrect E-Mail or Password.");
+			return new ModelAndView("redirect:/");
+		}
 	}
 
+	@RequestMapping(value="/logout", method = RequestMethod.GET)
+	public ModelAndView logoutOfSystemWeb(HttpSession session) {
+		session.removeAttribute("me");
+		return new ModelAndView("redirect:/");
+	}
+	
 	@RequestMapping(value = "/loginmobile", method = RequestMethod.GET)
 	@ResponseBody
 	public HashMap<String, String> loginToSystemMobile(@RequestParam("inputemail") String email,

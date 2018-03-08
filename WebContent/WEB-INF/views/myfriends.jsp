@@ -13,7 +13,7 @@
 	crossorigin="anonymous">
 <link href="https://fonts.googleapis.com/icon?family=Material+Icons"
 	rel="stylesheet">
-<title>${me.first_name}'sFriends</title>
+<title>${me.first_name}'s&nbsp;Friends</title>
 </head>
 <body>
 
@@ -28,21 +28,21 @@
 		<div class="collapse navbar-collapse" id="navbarmenu">
 			<div class="navbar-nav ml-3 mr-auto">
 				<a class="nav-item nav-link" href="myfeed"><i
-					class="material-icons">home</i> My Feed </a>
-				<a class="nav-item nav-link" href="mycourses"><i
+					class="material-icons">home</i> My Feed </a> <a
+					class="nav-item nav-link" href="mycourses"><i
 					class="material-icons">label</i> Courses </a> <a
 					class="nav-item nav-link active " href="myfriends"><i
 					class="material-icons">group</i> Students <span class="sr-only">(current)</span></a>
 			</div>
 			<span class="navbar-text"> ${me.email}</span>
-			<form class="form-inline">
-				<button class="btn btn-outline-danger ml-3" type="button">Logout</button>
+			<form class="form-inline" action="logout" method="GET">
+				<button class="btn btn-outline-danger ml-3" type="submit">Logout</button>
 			</form>
 		</div>
 	</div>
 	</nav>
 
-	<div class="container" style="margin-top: 80px;" id="clistcontainer">
+	<div class="container" style="margin-top: 95px;" id="clistcontainer">
 		<h1 class="display-4 mb-3">Students I Follow/Who Follow Me</h1>
 		<nav class="nav nav-tabs nav-fill" id="myTab" role="tablist"> <a
 			class="nav-item nav-link active" id="nav-ifollow-tab"

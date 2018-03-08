@@ -16,7 +16,7 @@
 	crossorigin="anonymous">
 <link href="https://fonts.googleapis.com/icon?family=Material+Icons"
 	rel="stylesheet">
-<title>${me.first_name}'sFeed</title>
+<title>${me.first_name}'s&nbsp;Feed</title>
 </head>
 <body>
 	<nav class="navbar navbar-expand-lg fixed-top navbar-light bg-light">
@@ -37,8 +37,8 @@
 					class="material-icons">group</i> Students </a>
 			</div>
 			<span class="navbar-text"> ${me.email}</span>
-			<form class="form-inline">
-				<button class="btn btn-outline-danger ml-3" type="button">Logout</button>
+			<form class="form-inline" action="logout" method="GET">
+				<button class="btn btn-outline-danger ml-3" type="submit">Logout</button>
 			</form>
 		</div>
 	</div>

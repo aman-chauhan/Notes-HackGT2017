@@ -1,4 +1,5 @@
 <%@ taglib prefix="spring" uri="http://www.springframework.org/tags"%>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
@@ -20,21 +21,37 @@
 	<nav class="navbar fixed-top navbar-light bg-light">
 	<div class="container">
 		<span class="h1" class="navbar-brand">Notes</span>
-		<form class="form-inline" action="myfeed" method="POST">
+		<form class="form-inline" action="login" method="POST">
 			<input id="loginemail" name="loginemail" class="form-control mx-1"
 				type="email" placeholder="Email-ID" aria-label="EMail"> <input
 				id="loginpassword" name="loginpassword" class="form-control mx-1"
 				type="password" placeholder="Password" aria-label="Password">
-			<button class="btn btn-outline-primary mx-1" type="submit">Login</button>
+			<button class="btn btn-outline-primary mx-1" type="submit">Login
+			</button>
 		</form>
 	</div>
 	</nav>
 
-	<div class="container" style="margin-top: 80px;">
+	<div class="container" style="margin-top: 95px;">
+		<c:choose>
+			<c:when test="${empty loginerror}">
+			</c:when>
+			<c:otherwise>
+				<div class="alert alert-warning alert-dismissible fade show"
+					role="alert">
+					<strong>Login Error!</strong> ${loginerror}
+					<button type="button" class="close" data-dismiss="alert"
+						aria-label="Close">
+						<span aria-hidden="true">&times;</span>
+					</button>
+				</div>
+			</c:otherwise>
+		</c:choose>
 		<div class="jumbotron">
 			<div class="row align-items-center">
 				<div class="col-sm-8">
 					<h1 id="trgt" class="display-4 text-center">Sign Up</h1>
+					<h3 id="msg" class="text-center hidden"></h3>
 				</div>
 				<div class="col-sm-4 align-items-center">
 					<div class="form-group">
@@ -58,7 +75,8 @@
 						<label for="repassword">Retype Password</label> <input
 							type="password" class="form-control" id="repassword">
 					</div>
-					<button id="submit-signup" type="submit" class="btn btn-primary">Submit</button>
+					<button id="submit-signup" type="submit" class="btn btn-primary">Sign
+						Up</button>
 				</div>
 			</div>
 		</div>
