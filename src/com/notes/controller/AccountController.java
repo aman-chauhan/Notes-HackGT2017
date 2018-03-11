@@ -70,12 +70,12 @@ public class AccountController {
 		}
 	}
 
-	@RequestMapping(value="/logout", method = RequestMethod.GET)
+	@RequestMapping(value = "/logout", method = RequestMethod.GET)
 	public ModelAndView logoutOfSystemWeb(HttpSession session) {
 		session.removeAttribute("me");
 		return new ModelAndView("redirect:/");
 	}
-	
+
 	@RequestMapping(value = "/loginmobile", method = RequestMethod.GET)
 	@ResponseBody
 	public HashMap<String, String> loginToSystemMobile(@RequestParam("inputemail") String email,
@@ -83,9 +83,11 @@ public class AccountController {
 		System.out.println(email + " " + password);
 		Student student = jdbcobject.getStudentbyLogin(email, password);
 		HashMap<String, String> map = new HashMap<String, String>();
-		map.put("id", Integer.toString(student.getStudent_id()));
-		map.put("email", student.getEmail());
-		map.put("password", student.getPassword());
+		if (student != null) {
+			map.put("id", Integer.toString(student.getStudent_id()));
+			map.put("email", student.getEmail());
+			map.put("password", student.getPassword());
+		}
 		return map;
 	}
 
