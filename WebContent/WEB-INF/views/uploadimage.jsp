@@ -15,10 +15,9 @@
 	crossorigin="anonymous">
 <link href="https://fonts.googleapis.com/icon?family=Material+Icons"
 	rel="stylesheet">
-<title>${me.first_name}'s&nbsp;Courses</title>
+<title>${me.first_name}'s&nbsp;Image&nbsp;Upload</title>
 </head>
 <body>
-
 	<nav class="navbar navbar-expand-lg fixed-top navbar-light bg-light">
 		<div class="container">
 			<span class="h1" class="navbar-brand">Notes</span>
@@ -29,11 +28,11 @@
 			</button>
 			<div class="collapse navbar-collapse" id="navbarmenu">
 				<div class="navbar-nav ml-3 mr-auto">
-					<a class="nav-item nav-link" href="myfeed"><i
-						class="material-icons">home</i> My Feed </a> <a
-						class="nav-item nav-link active" href="mycourses"><i
-						class="material-icons">label</i> Courses <span class="sr-only">(current)</span></a>
-					<a class="nav-item nav-link" href="myfriends"><i
+					<a class="nav-item nav-link active" href="myfeed"><i
+						class="material-icons">home</i> My Feed <span class="sr-only">(current)</span></a>
+					<a class="nav-item nav-link" href="mycourses"><i
+						class="material-icons">label</i> Courses </a> <a
+						class="nav-item nav-link" href="myfriends"><i
 						class="material-icons">group</i> Students </a>
 				</div>
 				<span class="navbar-text"> ${me.email}</span>
@@ -44,7 +43,7 @@
 		</div>
 	</nav>
 
-	<div class="container" style="margin-top: 95px;" id="clistcontainer">
+	<div class="container" style="margin-top: 120px;">
 		<c:choose>
 			<c:when test="${empty alert}">
 			</c:when>
@@ -59,25 +58,37 @@
 				</div>
 			</c:otherwise>
 		</c:choose>
-		<h1 class="display-4">Courses I Follow</h1>
-		<div class="card my-2">
-			<div class="card-body">
-				<h4 class="card-title">Course Name</h4>
-				<button type="button" class="btn btn-outline-primary ">View</button>
+
+		<div class="row justify-content-sm-center">
+			<div class="col-sm-4">
+				<div class="card">
+					<div class="card-header text-center">
+						<h1>Upload Image</h1>
+					</div>
+					<div class="card-body text-center">
+						<form action="noteimage" method="POST">
+							<div class="form-group">
+								<label for="courseid">Select Course</label> <select
+									class="form-control form-control-lg" id="courseid"
+									name="courseid">
+									<c:forEach var="course" items="${courses}">
+										<option value="${course.course_id}">${course.course_id}&nbsp;-&nbsp;${course.course_name}</option>
+									</c:forEach>
+								</select>
+							</div>
+							<div class="form-group">
+								<label for="imageofnote">Select image from Gallery</label> <input
+									type="file" class="form-control-file" id="imageofnote"
+									name="imageofnote">
+							</div>
+							<input type="hidden" name="studentid" value="${me.student_id}">
+							<button type="submit" class="btn btn-outline-primary">Submit</button>
+						</form>
+					</div>
+				</div>
 			</div>
 		</div>
-		<div class="card my-2">
-			<div class="card-body">
-				<h4 class="card-title">Course Name</h4>
-				<button type="button" class="btn btn-outline-primary ">View</button>
-			</div>
-		</div>
-		<div class="card my-2">
-			<div class="card-body">
-				<h4 class="card-title">Course Name</h4>
-				<button type="button" class="btn btn-outline-primary ">View</button>
-			</div>
-		</div>
+
 	</div>
 
 	<script src="https://code.jquery.com/jquery-3.3.1.min.js"
