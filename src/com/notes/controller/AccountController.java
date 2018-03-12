@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
+import com.notes.model.Alert;
 import com.notes.model.Note;
 import com.notes.model.Student;
 import com.notes.template.StudentJDBC;
@@ -60,12 +61,16 @@ public class AccountController {
 		Student student = jdbcobject.getStudentbyLogin(email, password);
 		if (student != null) {
 			session.setAttribute("me", student);
-			if (session.getAttribute("loginerror") != null) {
-				session.removeAttribute("loginerror");
+			if (session.getAttribute("alert") != null) {
+				session.removeAttribute("alert");
 			}
 			return new ModelAndView("redirect:/myfeed");
 		} else {
-			session.setAttribute("loginerror", "Incorrect E-Mail or Password.");
+			Alert msg=new Alert();
+			msg.setType("warning");
+			msg.setMain("Error");
+			msg.setText("Incorrect E-Mail or Password.");
+			session.setAttribute("alert", msg);
 			return new ModelAndView("redirect:/");
 		}
 	}
@@ -76,19 +81,24 @@ public class AccountController {
 		return new ModelAndView("redirect:/");
 	}
 
-	@RequestMapping(value = "/loginmobile", method = RequestMethod.GET)
-	@ResponseBody
-	public HashMap<String, String> loginToSystemMobile(@RequestParam("inputemail") String email,
-			@RequestParam("inputpassword") String password) {
-		System.out.println(email + " " + password);
+	@RequestMapping(value = "/loginmobile", method = RequestMethod.POST)
+	public ModelAndView loginToSystemMobile(@RequestParam("inputemail") String email,
+			@RequestParam("inputpassword") String password, HttpSession session) {
 		Student student = jdbcobject.getStudentbyLogin(email, password);
-		HashMap<String, String> map = new HashMap<String, String>();
 		if (student != null) {
-			map.put("id", Integer.toString(student.getStudent_id()));
-			map.put("email", student.getEmail());
-			map.put("password", student.getPassword());
+			session.setAttribute("me", student);
+			if (session.getAttribute("alert") != null) {
+				session.removeAttribute("alert");
+			}
+			return new ModelAndView("redirect:/uploadnote");
+		} else {
+			Alert msg=new Alert();
+			msg.setType("warning");
+			msg.setMain("Error");
+			msg.setText("Incorrect E-Mail or Password.");
+			session.setAttribute("alert", msg);
+			return new ModelAndView("redirect:/upload");
 		}
-		return map;
 	}
 
 	@RequestMapping(value = "/myfriends", method = RequestMethod.GET)

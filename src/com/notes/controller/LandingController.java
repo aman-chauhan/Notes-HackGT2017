@@ -19,4 +19,14 @@ public class LandingController{
 		}
 	}
 	
+	@RequestMapping("/upload")
+	public ModelAndView loadUploadLanding(HttpSession session) {
+		if(session.getAttribute("me")==null) {
+			ModelAndView modelandview = new ModelAndView("uploadindex");
+			return modelandview;
+		} else {
+			return new ModelAndView("redirect:/uploadnote");
+		}
+	}
+	
 }

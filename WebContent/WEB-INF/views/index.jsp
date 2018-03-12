@@ -2,10 +2,11 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
-<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<!DOCTYPE html>
 <html>
 <head>
 <spring:url value="/resources/js/js-index.js" var="indexjs" />
+<spring:url value="/resources/js/js-alert.js" var="alertjs" />
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <meta name="viewport"
 	content="width=device-width, initial-scale=1, shrink-to-fit=no">
@@ -19,29 +20,29 @@
 </head>
 <body>
 	<nav class="navbar fixed-top navbar-light bg-light">
-	<div class="container">
-		<span class="h1" class="navbar-brand">Notes</span>
-		<form class="form-inline" action="login" method="POST">
-			<input id="loginemail" name="loginemail" class="form-control mx-1"
-				type="email" placeholder="Email-ID" aria-label="EMail"> <input
-				id="loginpassword" name="loginpassword" class="form-control mx-1"
-				type="password" placeholder="Password" aria-label="Password">
-			<button class="btn btn-outline-primary mx-1" type="submit">Login
-			</button>
-		</form>
-	</div>
+		<div class="container">
+			<span class="h1" class="navbar-brand">Notes</span>
+			<form class="form-inline" action="login" method="POST">
+				<input id="loginemail" name="loginemail" class="form-control mx-1"
+					type="email" placeholder="Email-ID" aria-label="EMail"> <input
+					id="loginpassword" name="loginpassword" class="form-control mx-1"
+					type="password" placeholder="Password" aria-label="Password">
+				<button class="btn btn-outline-primary mx-1" type="submit">Login
+				</button>
+			</form>
+		</div>
 	</nav>
 
 	<div class="container" style="margin-top: 95px;">
 		<c:choose>
-			<c:when test="${empty loginerror}">
+			<c:when test="${empty alert}">
 			</c:when>
 			<c:otherwise>
-				<div class="alert alert-warning alert-dismissible fade show"
+				<div class="alert alert-${alert.type} alert-dismissible fade show"
 					role="alert">
-					<strong>Login Error!</strong> ${loginerror}
+					<strong>${alert.main} !</strong> ${alert.text}
 					<button type="button" class="close" data-dismiss="alert"
-						aria-label="Close">
+						aria-label="Close" id="alertclose">
 						<span aria-hidden="true">&times;</span>
 					</button>
 				</div>
@@ -91,8 +92,8 @@
 			4 </a>
 	</div>
 
-	<script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"
-		integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN"
+	<script src="https://code.jquery.com/jquery-3.3.1.min.js"
+		integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8="
 		crossorigin="anonymous"></script>
 	<script
 		src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"
@@ -103,5 +104,6 @@
 		integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl"
 		crossorigin="anonymous"></script>
 	<script src="${indexjs}"></script>
+	<script src="${alertjs}"></script>
 </body>
 </html>
