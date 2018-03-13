@@ -28,7 +28,7 @@
 			</button>
 			<div class="collapse navbar-collapse" id="navbarmenu">
 				<div class="navbar-nav ml-3 mr-auto">
-					<a class="nav-item nav-link active" href="myfeed"><i
+					<a class="nav-item nav-link" href="myfeed"><i
 						class="material-icons">home</i> My Feed <span class="sr-only">(current)</span></a>
 					<a class="nav-item nav-link" href="mycourses"><i
 						class="material-icons">label</i> Courses </a> <a
@@ -66,7 +66,7 @@
 						<h1>Upload Image</h1>
 					</div>
 					<div class="card-body text-center">
-						<form action="noteimage" method="POST">
+						<form action="noteimage" method="POST" enctype="multipart/form-data"]>
 							<div class="form-group">
 								<label for="courseid">Select Course</label> <select
 									class="form-control form-control-lg" id="courseid"

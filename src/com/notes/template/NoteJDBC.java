@@ -25,7 +25,7 @@ import com.notes.model.Note;
 public class NoteJDBC {
 	private DataSource ds;
 	private JdbcTemplate jdbcTemplateObject;
-	private static final String subscriptionKey = "021786cc5d4d45de91028b0a603002fd";
+	private static final String subscriptionKey = "3825e23344844b36935be01dfb5a9196";
 	private static final String uriBase = "https://westcentralus.api.cognitive.microsoft.com/vision/v1.0/recognizeText?handwriting=true";
 
 	public void setDataSource(DataSource ds) {
