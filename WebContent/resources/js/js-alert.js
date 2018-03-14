@@ -23,13 +23,24 @@ $(document).ready(function() {
 	});
 
 	$(".note-like-btn").click(function() {
-		$.ajax({
-			url : 'delete/' + $(this).data("noteid"),
-			type : 'get',
-			dataType : 'text',
-			success : function(data) {
-				location.reload(true);
-			}
-		});
+		if ($(this).data("noteliked") == 0) {
+			$.ajax({
+				url : 'like/' + $(this).data("noteid"),
+				type : 'get',
+				dataType : 'text',
+				success : function(data) {
+					location.reload(true);
+				}
+			});
+		} else {
+			$.ajax({
+				url : 'dislike/' + $(this).data("noteid"),
+				type : 'get',
+				dataType : 'text',
+				success : function(data) {
+					location.reload(true);
+				}
+			});
+		}
 	});
 });

@@ -17,6 +17,7 @@ import com.notes.model.Course;
 import com.notes.model.Note;
 import com.notes.model.Student;
 import com.notes.template.CourseJDBC;
+import com.notes.template.NoteJDBC;
 import com.notes.template.StudentJDBC;
 
 @Controller
@@ -26,6 +27,9 @@ public class AccountController {
 	private StudentJDBC studentjdbcobject;
 	@Autowired
 	private CourseJDBC coursejdbcobject;
+
+	@Autowired
+	private NoteJDBC notejdbcobject;
 
 	@RequestMapping(value = "/signup", method = RequestMethod.POST)
 	@ResponseBody
@@ -48,12 +52,16 @@ public class AccountController {
 		if (session.getAttribute("me") == null) {
 			return new ModelAndView("redirect:/");
 		} else {
-			List<Note> mynotes = studentjdbcobject.listOfNotesByMe(((Student) session.getAttribute("me")).getStudent_id(), 1);
-			List<Note> mydrafts = studentjdbcobject.listOfNotesByMe(((Student) session.getAttribute("me")).getStudent_id(), 0);
+			List<Note> mynotes = studentjdbcobject
+					.listOfNotesByMe(((Student) session.getAttribute("me")).getStudent_id(), 1);
+			List<Note> mydrafts = studentjdbcobject
+					.listOfNotesByMe(((Student) session.getAttribute("me")).getStudent_id(), 0);
 			List<Note> notesfromcourses = studentjdbcobject
 					.listOfNotesFromCoursesILike(((Student) session.getAttribute("me")).getStudent_id());
+			setLikes(notesfromcourses, ((Student) session.getAttribute("me")).getStudent_id());
 			List<Note> notesfromstudents = studentjdbcobject
 					.listOfNotesFromStudentsIFollow(((Student) session.getAttribute("me")).getStudent_id());
+			setLikes(notesfromstudents, ((Student) session.getAttribute("me")).getStudent_id());
 			List<Course> courselist = coursejdbcobject
 					.listOfCoursesOfStudent(((Student) session.getAttribute("me")).getStudent_id());
 			ModelAndView mav = new ModelAndView("myfeed");
@@ -63,6 +71,13 @@ public class AccountController {
 			mav.addObject("notesfromcourses", notesfromcourses);
 			mav.addObject("notesfromstudents", notesfromstudents);
 			return mav;
+		}
+	}
+
+	private void setLikes(List<Note> mynotes, int studentid) {
+		for (Note note : mynotes) {
+			note.setLikeCount(notejdbcobject.likeCount(note.getNoteID()));
+			note.setLiked(notejdbcobject.isliked(note.getNoteID(),studentid));
 		}
 	}
 

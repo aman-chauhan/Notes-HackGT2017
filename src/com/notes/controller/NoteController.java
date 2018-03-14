@@ -133,4 +133,18 @@ public class NoteController {
 		}
 		return "done";
 	}
+	
+	@RequestMapping(value = "/like/{id}", method = RequestMethod.GET)
+	@ResponseBody
+	public String likeNote(@PathVariable("id") String noteid, HttpSession session) {
+		notejdbcobject.likeNote(((Student) session.getAttribute("me")).getStudent_id(), noteid);
+		return "done";
+	}
+	
+	@RequestMapping(value = "/dislike/{id}", method = RequestMethod.GET)
+	@ResponseBody
+	public String dislikeNote(@PathVariable("id") String noteid, HttpSession session) {
+		notejdbcobject.dislikeNote(((Student) session.getAttribute("me")).getStudent_id(), noteid);
+		return "done";
+	}
 }

@@ -18,6 +18,7 @@ import java.util.Base64;
 
 import org.springframework.jdbc.core.JdbcTemplate;
 
+
 public class NoteJDBC {
 	private DataSource ds;
 	private JdbcTemplate jdbcTemplateObject;
@@ -104,6 +105,28 @@ public class NoteJDBC {
 
 	public int deleteNote(int student_id, String noteid) {
 		String SQL = "delete from note where StudentID=" + Integer.toString(student_id) + " and NoteID=" + noteid;
+		return jdbcTemplateObject.update(SQL);
+	}
+
+	public int likeNote(int student_id, String noteid) {
+		String SQL = "insert into likes (StudentID,NoteID) values (" + Integer.toString(student_id) + "," + noteid
+				+ ")";
+		return jdbcTemplateObject.update(SQL);
+	}
+
+	public int likeCount(int noteID) {
+		String SQL = "SELECT count(StudentID) as likecount FROM notes.likes WHERE NoteID=" + Integer.toString(noteID);
+		return jdbcTemplateObject.queryForObject(SQL, Integer.class).intValue();
+	}
+
+	public int isliked(int noteID, int studentid) {
+		String SQL = "SELECT count(StudentID) as likecount FROM notes.likes WHERE NoteID=" + Integer.toString(noteID)
+				+ " and StudentID=" + Integer.toString(studentid);
+		return jdbcTemplateObject.queryForObject(SQL, Integer.class).intValue();
+	}
+
+	public int dislikeNote(int student_id, String noteid) {
+		String SQL = "delete from likes where StudentID=" + Integer.toString(student_id) + " and NoteID=" + noteid;
 		return jdbcTemplateObject.update(SQL);
 	}
 

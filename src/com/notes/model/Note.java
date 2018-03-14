@@ -11,6 +11,24 @@ public class Note {
 	int StudentID;
 	String FirstName;
 	String LastName;
+	int liked;
+	int likeCount;
+
+	public int getLiked() {
+		return liked;
+	}
+
+	public void setLiked(int liked) {
+		this.liked = liked;
+	}
+
+	public int getLikeCount() {
+		return likeCount;
+	}
+
+	public void setLikeCount(int likeCount) {
+		this.likeCount = likeCount;
+	}
 
 	public String getCourseName() {
 		return CourseName;

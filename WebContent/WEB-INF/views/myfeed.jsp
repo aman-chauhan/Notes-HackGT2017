@@ -246,11 +246,26 @@
 												<i class="material-icons align-top">fullscreen</i> View
 											</button>
 											<c:if test="${note.studentID!=me.student_id}">
-												<button type="button"
-													class="note-like-btn btn btn-outline-success"
-													data-noteid="${note.noteID}">
-													<i class="material-icons align-top">thumb_up</i> Like
-												</button>
+												<c:choose>
+													<c:when test="${note.liked==1}">
+														<button type="button"
+															class="note-like-btn btn btn-success"
+															data-noteid="${note.noteID}"
+															data-noteliked="${note.liked}">
+															<i class="material-icons align-top">thumb_up</i> Like <span
+																class="badge badge-success align-middle">${note.likeCount}</span>
+														</button>
+													</c:when>
+													<c:otherwise>
+														<button type="button"
+															class="note-like-btn btn btn-outline-success"
+															data-noteid="${note.noteID}"
+															data-noteliked="${note.liked}">
+															<i class="material-icons align-top">thumb_up</i> Like <span
+																class="badge badge-success align-middle">${note.likeCount}</span>
+														</button>
+													</c:otherwise>
+												</c:choose>
 											</c:if>
 											<c:if test="${note.studentID==me.student_id}">
 												<button type="button"
@@ -291,11 +306,26 @@
 												<i class="material-icons align-top">fullscreen</i> View
 											</button>
 											<c:if test="${note.studentID!=me.student_id}">
-												<button type="button"
-													class="note-like-btn btn btn-outline-success"
-													data-noteid="${note.noteID}">
-													<i class="material-icons align-top">thumb_up</i> Like
-												</button>
+												<c:choose>
+													<c:when test="${note.liked==1}">
+														<button type="button"
+															class="note-like-btn btn btn-success"
+															data-noteid="${note.noteID}"
+															data-noteliked="${note.liked}">
+															<i class="material-icons align-top">thumb_up</i> Like <span
+																class="badge badge-success align-middle">${note.likeCount}</span>
+														</button>
+													</c:when>
+													<c:otherwise>
+														<button type="button"
+															class="note-like-btn btn btn-outline-success"
+															data-noteid="${note.noteID}"
+															data-noteliked="${note.liked}">
+															<i class="material-icons align-top">thumb_up</i> Like <span
+																class="badge badge-success align-middle">${note.likeCount}</span>
+														</button>
+													</c:otherwise>
+												</c:choose>
 											</c:if>
 										</div>
 									</div>

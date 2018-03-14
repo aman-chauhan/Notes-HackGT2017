@@ -7,18 +7,17 @@ import org.springframework.jdbc.core.RowMapper;
 
 import com.notes.model.Note;
 
-public class NoteMapper implements RowMapper<Note>{
-
+public class NoteMapper implements RowMapper<Note> {
 	@Override
 	public Note mapRow(ResultSet rs, int rowNum) throws SQLException {
-		Note note=new Note();
+		Note note = new Note();
 		note.setNoteID(rs.getInt("NoteID"));
 		note.setNoteDate(rs.getString("NoteDate"));
-		if(rs.wasNull()) {
+		if (rs.wasNull()) {
 			note.setNoteDate("Date Not Set");
 		}
 		note.setNoteTitle(rs.getString("NoteTitle"));
-		if(rs.wasNull()) {
+		if (rs.wasNull()) {
 			note.setNoteTitle("Title Not Set");
 		}
 		note.setNoteContent(rs.getString("NoteContent"));
@@ -30,5 +29,5 @@ public class NoteMapper implements RowMapper<Note>{
 		note.setCourseName(rs.getString("CourseName"));
 		return note;
 	}
-	
+
 }
