@@ -165,7 +165,7 @@
 																	<div class="row">
 																		<div class="col-sm">
 																			<select class="form-control"
-																				id="edit-courseid-${note.noteID}" name="courseid">
+																				id="edit-courseid-${note.noteID}" name="courseID">
 																				<c:forEach var="course" items="${courselist}">
 																					<c:choose>
 																						<c:when test="${course.course_id==note.courseID}">

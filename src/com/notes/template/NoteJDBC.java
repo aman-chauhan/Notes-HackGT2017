@@ -18,7 +18,6 @@ import java.util.Base64;
 
 import org.springframework.jdbc.core.JdbcTemplate;
 
-
 public class NoteJDBC {
 	private DataSource ds;
 	private JdbcTemplate jdbcTemplateObject;
@@ -77,13 +76,30 @@ public class NoteJDBC {
 				}
 			}
 			System.out.println(s);
-			int cid=Integer.parseInt(courseid);
+			int cid = Integer.parseInt(courseid);
 			String SQL = "insert into note (NoteDate, NoteTitle, NoteContent, CourseID, StudentID) values (NULL,NULL,?,?,?)";
-			jdbcTemplateObject.update(SQL,s,cid,studentid);
-			
+			jdbcTemplateObject.update(SQL, s, cid, studentid);
+
 		} catch (Exception e) {
 			System.out.println(e.getMessage());
 		}
 
 	}
+
+	public int editNote(int student_id, String noteid, String noteTitle, String noteDate, String courseID,
+			String noteContent) {
+		String SQL = "update note set NoteDate='" + noteDate + "', NoteTitle='" + noteTitle + "', NoteContent='"
+				+ noteContent + "', CourseID=" + courseID + " where StudentID=" + Integer.toString(student_id)
+				+ " and NoteID=" + noteid;
+		return jdbcTemplateObject.update(SQL);
+
+	}
+
+	public int submitNote(int student_id, String noteid, String noteTitle, String noteDate, String noteContent) {
+		String SQL = "update note set NoteDate='" + noteDate + "', NoteTitle='" + noteTitle + "', NoteContent='"
+				+ noteContent + "', NoteApproval=1 where StudentID=" + Integer.toString(student_id) + " and NoteID="
+				+ noteid;
+		return jdbcTemplateObject.update(SQL);
+	}
+
 }

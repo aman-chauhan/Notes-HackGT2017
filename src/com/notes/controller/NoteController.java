@@ -6,6 +6,7 @@ import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -21,7 +22,7 @@ import com.notes.template.NoteJDBC;
 public class NoteController {
 
 	@Autowired
-	private NoteJDBC notedbcobject;
+	private NoteJDBC notejdbcobject;
 
 	@Autowired
 	private CourseJDBC coursejdbcobject;
@@ -30,7 +31,8 @@ public class NoteController {
 	public ModelAndView uploadinitialnote(@RequestParam("courseid") String courseid,
 			@RequestParam("imageofnote") MultipartFile imageofnote, HttpSession session) {
 		try {
-			notedbcobject.createNote(((Student)session.getAttribute("me")).getStudent_id(), courseid, Base64.getEncoder().encodeToString(imageofnote.getBytes()));
+			notejdbcobject.createNote(((Student) session.getAttribute("me")).getStudent_id(), courseid,
+					Base64.getEncoder().encodeToString(imageofnote.getBytes()));
 			Alert msg = new Alert();
 			msg.setType("success");
 			msg.setMain("Success");
@@ -56,6 +58,58 @@ public class NoteController {
 			model.addObject("courses",
 					coursejdbcobject.listOfCoursesOfStudent(((Student) session.getAttribute("me")).getStudent_id()));
 			return model;
+		}
+	}
+
+	@RequestMapping(value = "/edit/note/{id}", method = RequestMethod.POST)
+	public ModelAndView editExistingNote(@PathVariable("id") String noteid, @RequestParam("noteTitle") String noteTitle,
+			@RequestParam("noteDate") String noteDate, @RequestParam("courseID") String courseID,
+			@RequestParam("noteContent") String noteContent, HttpSession session) {
+		if (session.getAttribute("me") == null) {
+			return new ModelAndView("redirect:/");
+		} else {
+			int result = notejdbcobject.editNote(((Student) session.getAttribute("me")).getStudent_id(), noteid,
+					noteTitle, noteDate, courseID, noteContent);
+			if (result == 0) {
+				Alert msg = new Alert();
+				msg.setType("warning");
+				msg.setMain("Failed");
+				msg.setText("There was some error. Please try again.");
+				session.setAttribute("alert", msg);
+			} else {
+				Alert msg = new Alert();
+				msg.setType("success");
+				msg.setMain("Success");
+				msg.setText("The note was editted successfully.");
+				session.setAttribute("alert", msg);
+			}
+			return new ModelAndView("redirect:/myfeed");
+		}
+	}
+
+	@RequestMapping(value = "/submit/note/{id}", method = RequestMethod.POST)
+	public ModelAndView submitNote(@PathVariable("id") String noteid, @RequestParam("noteTitle") String noteTitle,
+			@RequestParam("noteDate") String noteDate, @RequestParam("noteContent") String noteContent,
+			HttpSession session) {
+		if (session.getAttribute("me") == null) {
+			return new ModelAndView("redirect:/");
+		} else {
+			int result = notejdbcobject.submitNote(((Student) session.getAttribute("me")).getStudent_id(), noteid,
+					noteTitle, noteDate, noteContent);
+			if (result == 0) {
+				Alert msg = new Alert();
+				msg.setType("warning");
+				msg.setMain("Failed");
+				msg.setText("There was some error. Please try again.");
+				session.setAttribute("alert", msg);
+			} else {
+				Alert msg = new Alert();
+				msg.setType("success");
+				msg.setMain("Success");
+				msg.setText("The note was submitted successfully.");
+				session.setAttribute("alert", msg);
+			}
+			return new ModelAndView("redirect:/myfeed");
 		}
 	}
 }
