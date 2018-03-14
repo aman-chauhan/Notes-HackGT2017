@@ -209,7 +209,8 @@
 												<i class="material-icons align-top">edit</i> Edit
 											</button>
 											<button type="button"
-												class="note-delete-btn btn btn-outline-danger ">
+												class="note-delete-btn btn btn-outline-danger"
+												data-noteid="${note.noteID}">
 												<i class="material-icons align-top">delete</i> Delete
 											</button>
 										</div>
@@ -244,10 +245,13 @@
 												aria-controls="mycourses-card-text-${note.noteID}">
 												<i class="material-icons align-top">fullscreen</i> View
 											</button>
-											<button type="button"
-												class="note-like-btn btn btn-outline-success">
-												<i class="material-icons align-top">thumb_up</i> Like
-											</button>
+											<c:if test="${note.studentID!=me.student_id}">
+												<button type="button"
+													class="note-like-btn btn btn-outline-success"
+													data-noteid="${note.noteID}">
+													<i class="material-icons align-top">thumb_up</i> Like
+												</button>
+											</c:if>
 											<c:if test="${note.studentID==me.student_id}">
 												<button type="button"
 													class="note-edit-btn btn btn-outline-warning ">
@@ -286,10 +290,13 @@
 												aria-controls="myfriends-card-text-${note.noteID}">
 												<i class="material-icons align-top">fullscreen</i> View
 											</button>
-											<button type="button"
-												class="note-like-btn btn btn-outline-success">
-												<i class="material-icons align-top">thumb_up</i> Like
-											</button>
+											<c:if test="${note.studentID!=me.student_id}">
+												<button type="button"
+													class="note-like-btn btn btn-outline-success"
+													data-noteid="${note.noteID}">
+													<i class="material-icons align-top">thumb_up</i> Like
+												</button>
+											</c:if>
 										</div>
 									</div>
 								</c:forEach>
@@ -320,7 +327,8 @@
 													<i class="material-icons align-top">cloud_upload</i> Submit
 												</button>
 												<button type="button"
-													class="note-delete-btn btn btn-outline-danger ">
+													class="note-delete-btn btn btn-outline-danger"
+													data-noteid="${note.noteID}">
 													<i class="material-icons align-top">delete</i> Delete
 												</button>
 											</form>

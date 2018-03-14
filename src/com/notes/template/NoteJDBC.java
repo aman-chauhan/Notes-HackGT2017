@@ -102,4 +102,9 @@ public class NoteJDBC {
 		return jdbcTemplateObject.update(SQL);
 	}
 
+	public int deleteNote(int student_id, String noteid) {
+		String SQL = "delete from note where StudentID=" + Integer.toString(student_id) + " and NoteID=" + noteid;
+		return jdbcTemplateObject.update(SQL);
+	}
+
 }

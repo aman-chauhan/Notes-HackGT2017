@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.ModelAndView;
 
@@ -111,5 +112,25 @@ public class NoteController {
 			}
 			return new ModelAndView("redirect:/myfeed");
 		}
+	}
+
+	@RequestMapping(value = "/delete/{id}", method = RequestMethod.GET)
+	@ResponseBody
+	public String deleteNote(@PathVariable("id") String noteid, HttpSession session) {
+		int result = notejdbcobject.deleteNote(((Student) session.getAttribute("me")).getStudent_id(), noteid);
+		if (result == 0) {
+			Alert msg = new Alert();
+			msg.setType("warning");
+			msg.setMain("Failed");
+			msg.setText("Cannot delete this note.");
+			session.setAttribute("alert", msg);
+		} else {
+			Alert msg = new Alert();
+			msg.setType("success");
+			msg.setMain("Success");
+			msg.setText("The note was deleted successfully.");
+			session.setAttribute("alert", msg);
+		}
+		return "done";
 	}
 }

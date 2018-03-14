@@ -11,4 +11,25 @@ $(document).ready(function() {
 		});
 	});
 
+	$(".note-delete-btn").click(function() {
+		$.ajax({
+			url : 'delete/' + $(this).data("noteid"),
+			type : 'get',
+			dataType : 'text',
+			success : function(data) {
+				location.reload(true);
+			}
+		});
+	});
+
+	$(".note-like-btn").click(function() {
+		$.ajax({
+			url : 'delete/' + $(this).data("noteid"),
+			type : 'get',
+			dataType : 'text',
+			success : function(data) {
+				location.reload(true);
+			}
+		});
+	});
 });

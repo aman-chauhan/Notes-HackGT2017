@@ -32,7 +32,7 @@ public class StudentJDBC {
 		try {
 			Student student = jdbcTemplateObject.queryForObject(SQL, new StudentMapper(), email, password);
 			return student;
-		} catch(Exception e) {
+		} catch (Exception e) {
 			return null;
 		}
 	}
@@ -51,15 +51,15 @@ public class StudentJDBC {
 		return studentlist;
 	}
 
-	public List<Note> listOfNotesByMe(int studentid,int approval) {
-		String SQL = "select * from note N, course C, student S where N.CourseID=C.CourseID and N.StudentID=S.StudentID and N.StudentID = " + studentid
-				+ " and N.NoteApproval="+approval+" order by NoteDate DESC";
+	public List<Note> listOfNotesByMe(int studentid, int approval) {
+		String SQL = "select * from note N, course C, student S where N.CourseID=C.CourseID and N.StudentID=S.StudentID and N.StudentID = "
+				+ studentid + " and N.NoteApproval=" + approval + " order by NoteDate DESC";
 		List<Note> notelist = jdbcTemplateObject.query(SQL, new NoteMapper());
 		return notelist;
 	}
 
 	public List<Note> listOfNotesFromCoursesILike(int studentid) {
-		String SQL = "select * from note N, course C, student S where N.CourseID=C.CourseID and N.StudentID=S.StudentID and N.NoteApproval = 1 and N.StudentID<>"+studentid+" and N.CourseID in (select distinct SFC.CourseID from studentfollowscourse SFC where SFC.StudentID = "
+		String SQL = "select * from note N, course C, student S where N.CourseID=C.CourseID and N.StudentID=S.StudentID and N.NoteApproval = 1 and N.CourseID in (select distinct SFC.CourseID from studentfollowscourse SFC where SFC.StudentID = "
 				+ studentid + ") order by NoteDate DESC";
 		List<Note> notelist = jdbcTemplateObject.query(SQL, new NoteMapper());
 		return notelist;
