@@ -16,14 +16,20 @@ import com.notes.template.CourseJDBC;
 
 @Controller
 public class CourseController {
-	
+
 	@Autowired
 	private CourseJDBC jdbcobject;
-	
+
 	@RequestMapping(value = "/mycourses", method = RequestMethod.GET)
 	public ModelAndView showStudentCourses(HttpSession session) {
-		List<Course> courselist = jdbcobject.listOfCoursesOfStudent(((Student) session.getAttribute("me")).getStudent_id());
-		ModelAndView mav = new ModelAndView("mycourses");
-		return mav;
+		if (session.getAttribute("me") == null) {
+			return new ModelAndView("redirect:/");
+		} else {
+			List<Course> courselist = jdbcobject
+					.listOfCoursesOfStudent(((Student) session.getAttribute("me")).getStudent_id());
+			ModelAndView mav = new ModelAndView("mycourses");
+			mav.addObject("courselist", courselist);
+			return mav;
+		}
 	}
 }

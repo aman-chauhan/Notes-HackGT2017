@@ -1,6 +1,5 @@
 package com.notes.template;
 
-import java.io.File;
 import java.net.URI;
 import org.apache.http.HttpEntity;
 import org.apache.http.HttpResponse;
@@ -9,7 +8,6 @@ import org.apache.http.client.methods.HttpGet;
 import org.apache.http.client.methods.HttpPost;
 import org.apache.http.entity.ByteArrayEntity;
 import org.apache.http.entity.ContentType;
-import org.apache.http.entity.StringEntity;
 import org.apache.http.impl.client.DefaultHttpClient;
 import org.apache.http.util.EntityUtils;
 import org.apache.http.Header;
@@ -20,7 +18,6 @@ import java.util.Base64;
 
 import org.springframework.jdbc.core.JdbcTemplate;
 
-import com.notes.model.Note;
 
 public class NoteJDBC {
 	private DataSource ds;
@@ -33,7 +30,7 @@ public class NoteJDBC {
 		this.jdbcTemplateObject = new JdbcTemplate(this.ds);
 	}
 
-	public void createNote(String studentid, String courseid, String base64string) {
+	public void createNote(int studentid, String courseid, String base64string) {
 		HttpClient textClient = new DefaultHttpClient();
 		HttpClient resultClient = new DefaultHttpClient();
 
@@ -80,10 +77,9 @@ public class NoteJDBC {
 				}
 			}
 			System.out.println(s);
-			int sid=Integer.parseInt(studentid);
 			int cid=Integer.parseInt(courseid);
 			String SQL = "insert into note (NoteDate, NoteTitle, NoteContent, CourseID, StudentID) values (NULL,NULL,?,?,?)";
-			jdbcTemplateObject.update(SQL,s,cid,sid);
+			jdbcTemplateObject.update(SQL,s,cid,studentid);
 			
 		} catch (Exception e) {
 			System.out.println(e.getMessage());

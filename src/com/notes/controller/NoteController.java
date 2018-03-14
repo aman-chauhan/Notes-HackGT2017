@@ -22,38 +22,39 @@ public class NoteController {
 
 	@Autowired
 	private NoteJDBC notedbcobject;
-	
+
 	@Autowired
 	private CourseJDBC coursejdbcobject;
 
 	@RequestMapping(value = "/noteimage", method = RequestMethod.POST)
-	public ModelAndView uploadinitialnote(@RequestParam("studentid") String studentid,
-			@RequestParam("courseid") String courseid, @RequestParam("imageofnote") MultipartFile imageofnote, HttpSession session) {
+	public ModelAndView uploadinitialnote(@RequestParam("courseid") String courseid,
+			@RequestParam("imageofnote") MultipartFile imageofnote, HttpSession session) {
 		try {
-			notedbcobject.createNote(studentid, courseid, Base64.getEncoder().encodeToString(imageofnote.getBytes()));
-			Alert msg=new Alert();
+			notedbcobject.createNote(((Student)session.getAttribute("me")).getStudent_id(), courseid, Base64.getEncoder().encodeToString(imageofnote.getBytes()));
+			Alert msg = new Alert();
 			msg.setType("success");
 			msg.setMain("Success");
 			msg.setText("Your note was added to your collection. You can edit it on your feed.");
 			session.setAttribute("alert", msg);
-			return new ModelAndView("redirect:/uploadnote");
+			return new ModelAndView("redirect:/uploadfromimage");
 		} catch (IOException e) {
-			Alert msg=new Alert();
+			Alert msg = new Alert();
 			msg.setType("danger");
 			msg.setMain("Failed");
 			msg.setText("There was some error. Please try again.");
 			session.setAttribute("alert", msg);
-			return new ModelAndView("redirect:/uploadnote");
+			return new ModelAndView("redirect:/uploadfromimage");
 		}
 	}
-	
-	@RequestMapping(value="/uploadnote", method=RequestMethod.GET)
+
+	@RequestMapping(value = "/uploadfromimage", method = RequestMethod.GET)
 	public ModelAndView initialnotePage(HttpSession session) {
-		if(session.getAttribute("me")==null) {
+		if (session.getAttribute("me") == null) {
 			return new ModelAndView("redirect:/upload");
 		} else {
 			ModelAndView model = new ModelAndView("uploadimage");
-			model.addObject("courses", coursejdbcobject.listOfCoursesOfStudent(((Student)session.getAttribute("me")).getStudent_id()));
+			model.addObject("courses",
+					coursejdbcobject.listOfCoursesOfStudent(((Student) session.getAttribute("me")).getStudent_id()));
 			return model;
 		}
 	}

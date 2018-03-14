@@ -1,5 +1,6 @@
 <%@ taglib prefix="spring" uri="http://www.springframework.org/tags"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
+<%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
 <!DOCTYPE html>
@@ -20,7 +21,7 @@
 <body>
 	<nav class="navbar fixed-top navbar-light bg-light">
 		<div class="container">
-			<span class="h1" class="navbar-brand">Notes</span>
+			<span class="h1">Notes</span>
 		</div>
 	</nav>
 	<div class="container" style="margin-top: 120px;">

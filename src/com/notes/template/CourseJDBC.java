@@ -1,6 +1,5 @@
 package com.notes.template;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import javax.sql.DataSource;
@@ -8,9 +7,7 @@ import javax.sql.DataSource;
 import org.springframework.jdbc.core.JdbcTemplate;
 
 import com.notes.mapper.CourseMapper;
-import com.notes.mapper.StudentMapper;
 import com.notes.model.Course;
-import com.notes.model.Student;
 
 public class CourseJDBC {
 

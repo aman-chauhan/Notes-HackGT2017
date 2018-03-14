@@ -1,5 +1,6 @@
 <%@ taglib prefix="spring" uri="http://www.springframework.org/tags"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
+<%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
 <!DOCTYPE html>
@@ -21,21 +22,34 @@
 
 	<nav class="navbar navbar-expand-lg fixed-top navbar-light bg-light">
 		<div class="container">
-			<span class="h1" class="navbar-brand">Notes</span>
+			<span class="h1">Notes</span>
 			<button class="navbar-toggler" type="button" data-toggle="collapse"
 				data-target="#navbarmenu" aria-controls="navbarmenu"
 				aria-expanded="false" aria-label="Toggle navigation">
 				<span class="navbar-toggler-icon"></span>
 			</button>
-			<div class="collapse navbar-collapse" id="navbarmenu">
-				<div class="navbar-nav ml-3 mr-auto">
-					<a class="nav-item nav-link" href="myfeed"><i
-						class="material-icons">home</i> My Feed </a> <a
-						class="nav-item nav-link active" href="mycourses"><i
-						class="material-icons">label</i> Courses <span class="sr-only">(current)</span></a>
-					<a class="nav-item nav-link" href="myfriends"><i
-						class="material-icons">group</i> Students </a>
-				</div>
+			<div class="collapse navbar-collapse ml-3" id="navbarmenu">
+				<ul class="navbar-nav mr-auto">
+					<li class="nav-item"><a class="nav-link" href="myfeed"><i
+							class="material-icons align-top">home</i> My Feed </a></li>
+					<li class="nav-item active"><a class="nav-link"
+						href="mycourses"><i class="material-icons align-top">collections_bookmark</i>
+							Courses </a></li>
+					<li class="nav-item"><a class="nav-link" href="myfriends"><i
+							class="material-icons align-top">group</i> Students </a></li>
+					<li class="nav-item dropdown"><a
+						class="nav-link dropdown-toggle" href="#" id="createNoteDropdown"
+						role="button" data-toggle="dropdown" aria-haspopup="true"
+						aria-expanded="false"><i class="material-icons align-top">create</i>
+							Create Note </a>
+						<div class="dropdown-menu" aria-labelledby="createNoteDropdown">
+							<a class="dropdown-item" href="uploadfromtext"><i
+								class="material-icons align-top">text_fields</i> From Text </a>
+							<div class="dropdown-divider"></div>
+							<a class="dropdown-item" href="uploadfromimage"><i
+								class="material-icons align-top">add_a_photo</i> From Image </a>
+						</div></li>
+				</ul>
 				<span class="navbar-text"> ${me.email}</span>
 				<form class="form-inline" action="logout" method="GET">
 					<button class="btn btn-outline-danger ml-3" type="submit">Logout</button>
@@ -60,23 +74,20 @@
 			</c:otherwise>
 		</c:choose>
 		<h1 class="display-4">Courses I Follow</h1>
-		<div class="card my-2">
-			<div class="card-body">
-				<h4 class="card-title">Course Name</h4>
-				<button type="button" class="btn btn-outline-primary ">View</button>
-			</div>
-		</div>
-		<div class="card my-2">
-			<div class="card-body">
-				<h4 class="card-title">Course Name</h4>
-				<button type="button" class="btn btn-outline-primary ">View</button>
-			</div>
-		</div>
-		<div class="card my-2">
-			<div class="card-body">
-				<h4 class="card-title">Course Name</h4>
-				<button type="button" class="btn btn-outline-primary ">View</button>
-			</div>
+		<div class="row">
+			<c:forEach var="course" items="${courselist}">
+				<div class="col-sm-3">
+					<div class="card bg-light">
+						<div class="card-body">
+							<h4 class="card-title">
+								<c:out value="${course.course_name}" />
+							</h4>
+							<a href="course/${course.course_id}" role="button"
+								class="btn btn-primary">View</a>
+						</div>
+					</div>
+				</div>
+			</c:forEach>
 		</div>
 	</div>
 

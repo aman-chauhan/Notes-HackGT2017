@@ -25,7 +25,7 @@ public class LandingController{
 			ModelAndView modelandview = new ModelAndView("uploadindex");
 			return modelandview;
 		} else {
-			return new ModelAndView("redirect:/uploadnote");
+			return new ModelAndView("redirect:/uploadfromimage");
 		}
 	}
 	

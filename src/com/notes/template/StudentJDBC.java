@@ -6,7 +6,6 @@ import javax.sql.DataSource;
 
 import org.springframework.jdbc.core.JdbcTemplate;
 
-import com.notes.mapper.CourseMapper;
 import com.notes.mapper.NoteMapper;
 import com.notes.mapper.StudentMapper;
 import com.notes.mapper.StudentSafeMapper;
@@ -52,15 +51,15 @@ public class StudentJDBC {
 		return studentlist;
 	}
 
-	public List<Note> listOfNotesByMe(int studentid) {
+	public List<Note> listOfNotesByMe(int studentid,int approval) {
 		String SQL = "select * from note N, course C, student S where N.CourseID=C.CourseID and N.StudentID=S.StudentID and N.StudentID = " + studentid
-				+ " order by NoteApproval ASC, NoteDate DESC";
+				+ " and N.NoteApproval="+approval+" order by NoteDate DESC";
 		List<Note> notelist = jdbcTemplateObject.query(SQL, new NoteMapper());
 		return notelist;
 	}
 
 	public List<Note> listOfNotesFromCoursesILike(int studentid) {
-		String SQL = "select * from note N, course C, student S where N.CourseID=C.CourseID and N.StudentID=S.StudentID and N.NoteApproval = 1 and N.CourseID in (select distinct SFC.CourseID from studentfollowscourse SFC where SFC.StudentID = "
+		String SQL = "select * from note N, course C, student S where N.CourseID=C.CourseID and N.StudentID=S.StudentID and N.NoteApproval = 1 and N.StudentID<>"+studentid+" and N.CourseID in (select distinct SFC.CourseID from studentfollowscourse SFC where SFC.StudentID = "
 				+ studentid + ") order by NoteDate DESC";
 		List<Note> notelist = jdbcTemplateObject.query(SQL, new NoteMapper());
 		return notelist;
